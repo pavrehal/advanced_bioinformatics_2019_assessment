@@ -1,0 +1,90 @@
+---
+title: "Advanced Bioinformatics 2019 assessment"
+author: '8946'
+date: "30/05/2019"
+output: html_document
+keep_md: yes
+---
+
+# **Task 1**
+```{r}
+sum(5:55)
+```
+
+# **Task 2**
+```{r}
+sumfun <- function(n) {sum(5:n)}
+sumfun(10)
+sumfun(20)
+sumfun(100)
+```
+
+# **Task 3**
+```{r}
+n <- 12
+fib <- numeric(n)
+fib[1] <- 1
+fib[2] <- 1
+for (i in 3:n)
+{
+fib[i] <- fib[i-1]+fib[i-2] 
+3
+}
+fib
+```
+
+# **Task 4**
+```{r}
+library(ggplot2)
+data<-mtcars
+data$gear<-as.factor(mtcars$gear)
+p<-ggplot(data, aes(x=gear, y=mpg, fill=gear )) + geom_boxplot()
+p
+```
+
+# **Task 5**
+```{r}
+cars.lm <- lm(dist ~ speed, data = cars)
+cars.lm2 <- lm(dist ~ 0 + speed, data = cars)
+summary(cars.lm)
+
+summary(cars.lm2)
+```
+# Fitted slope = 3.9324
+# Intercept of line = -17.5791
+# Standard deviation = 0.4155
+
+# **Task 6**
+```{r}
+plot(cars, col='red',pch=20, cex=2, main="Relationship between Speed and Stopping Distance ", "Speed (mph)", "Stopping Distance (feet)")
+abline(-17.5791, 3.9324)
+```
+
+# **Task 7**
+```{r}
+new_speed <- cars$speed * (5280/3600)
+line<-lm(dist ~ 0+ new_speed + I(new_speed^2),cars)
+summary(line)
+```
+```{r}
+library(ggplot2)
+data <- cars
+reg_data <- lm(dist ~ speed + I(speed^2), data=data)
+reg_data
+reg_data$coefficients[3]
+data$new_speed <- data$speed * (5280/3600)
+reg_data <- lm(dist ~ 0 + new_speed + I(new_speed^2), data=data)
+summary(reg_data)
+ggplot(data, aes(x = new_speed, y = dist)) + 
+ geom_point(color='Black', size = 1) + xlim(c(0,40)) +
+ geom_smooth(method = "lm", formula = "y ~ 0 + x + I(x^2)",  color="green", fullrange='TRUE') + labs(title= 'Average Breaking Reaction Time ', y = 'Distance (feet)', x = "Speed (secs)")
+```
+
+
+
+
+
+
+
+
+
